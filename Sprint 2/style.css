@@ -1,0 +1,124 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: #24252a;
+}
+li,
+a,
+button {
+  font-weight: 500;
+  font-size: 3vh;
+  color: #24252a;
+  text-decoration: none;
+  background-color: #fbf3eb;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5vh 10%;
+  height: 10vh;
+  background-color: #fbf3eb;
+}
+.logo {
+  height: inherit;
+}
+.navLinks {
+  list-style: none;
+}
+.navLinks li {
+  display: inline-block;
+  padding: 0px 2vw;
+}
+.navLinks li a {
+  transition: all 0.3s ease 0s;
+}
+.navLinks li a:hover {
+  color: rgb(148, 9, 70, 1);
+}
+button {
+  padding: 2vh 4vw;
+  background-color: rgb(148, 9, 70, 1);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+button:hover {
+  background-color: rgb(148, 9, 70, 0.6);
+}
+ul {
+  display: flex;
+}
+.container {
+  border: blue solid;
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  height: 50vh;
+  justify-content: center;
+  align-items: center;
+}
+.card {
+  border: red solid;
+  height: 30vh;
+  width: 80vw;
+  justify-content: center;
+  display: inline-flex;
+  background-color: #fbf3eb;
+  border-radius: 30px;
+  overflow: hidden;
+}
+.icon img {
+  height: 100%;
+  width: 25vw;
+}
+.content {
+  margin-left: 1vw;
+}
+p {
+  position: relative;
+  height: 10vh;
+  overflow: hidden;
+}
+p::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 12vh;
+  background: linear-gradient(transparent, #fbf3eb);
+}
+
+.more {
+  position: relative;
+  text-align: center;
+  padding: 1vh 1vw;
+  background: rgb(148, 9, 70, 1);
+  width: 13vw;
+  margin-top: 1vh;
+  display: inline-block;
+  cursor: pointer;
+  text-transform: uppercase;
+  color: black;
+  font-weight: 900;
+  letter-spacing: 0.5vw;
+  font-size: 2vh;
+}
+.more::before {
+  content: "Read more";
+}
+
+.active .more::before {
+  content: "Read Less";
+}
+.active .content {
+  height: auto;
+}
+.active .content::before {
+  display: none;
+}

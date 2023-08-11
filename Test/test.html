@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="" rel="stylesheet" />
+    <title></title>
+  </head>
+  <body>
+    <div id="div">
+      <h1>GeeksforGeeks</h1>
+      <p id="p">Child Node</p>
+    </div>
+    <button onclick="multTable(8, 20)">
+      click to add
+    </button>
+
+    <script>
+      // Get the parent element
+
+      // Get the element to add after
+
+      // Function to add the element
+      function add() {
+        // Create a new element to add
+        const newText = document.getElementById("table");
+        const div = document.createElement("p");
+        div.innerHTML = "hello";
+        // newText.appendChild(div);
+        // Insert the created element
+        newText.after(div);
+      }
+      function multTable(rows, cols) {
+        let posi = document.querySelector("h1");
+        const tab = document.createElement("table");
+        tab.style.borderCollapse = "collapse";
+        for (let i = 0; i < rows; i++) {
+          let row = document.createElement("tr");
+          let rowTD = document.createElement("td");
+          row.id = i;
+          rowTD.innerHTML = i;
+          if (row.id % 2 === 0) {
+            row.style.backgroundColor = "orange";
+          }
+          tab.appendChild(row);
+          row.appendChild(rowTD);
+
+          for (let j = 0; j < cols; j++) {
+            let rowCell = document.createElement("td");
+            //für die Headline
+            if (i === 0) {
+              rowCell.innerHTML = j + 1;
+            } else {
+              let x = j + 1;
+              rowCell.innerHTML = x * i;
+            }
+
+            rowCell.style.textAlign = "center";
+            row.appendChild(rowCell);
+          }
+        }
+        posi.after(tab);
+      }
+    </script>
+  </body>
+</html>
