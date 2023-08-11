@@ -9,9 +9,9 @@ fetch("https://restcountries.com/v3.1/all")
     });
   });
 link = "https://restcountries.com/v3.1/all";
-let popArray = fetchPopu(link);
-console.log(popArray);
-function fetchPopu(link) {
+let popArray = fetchPopuData(link);
+//console.log(popArray);
+function fetchPopuData(link) {
   let res = [];
   fetch(link)
     .then((res) => {
@@ -19,29 +19,33 @@ function fetchPopu(link) {
     })
     .then((data) => {
       data.forEach((country) => {
-        //  console.log(country.population);
         res.push(country.population);
       });
     });
   return res;
 }
-// fetch("https://restcountries.com/v3.1/all")
-//   .then((res) => {
-//     return res.json();
-//   })
-//   .then((data) => {
-//     console.log(data);
-//   });
+function formatPopArray(array) {
+  for (let i = 0; i < array.length; i++) {}
+}
+
+// ! recursive Function machen
+// ! check zahl>3 -> .[letzten3Ziffern] zu array ->
+// ! letzten Ziffern löschen -> da capo
+
+let num = 813867;
 function giveDots(num) {
-  number = 34813867;
-  const res = parseInt(num).toLocaleString();
+  const res = num.toLocaleString();
   return res;
 }
 
-number2 = "34813867";
+number2 = "1.134.813.867";
 function splitNum(num) {
   if (num.length > 6) {
+    let res = num.substring(0, num.length - 6);
     let res2 = num.substring(num.length - 6, num.length);
-    return res2;
+    let res3 = giveDots(parseInt(res2));
+    return `${res} Mio. ${res3}`;
   }
 }
+let zahl = splitNum(number2);
+console.log(zahl);
