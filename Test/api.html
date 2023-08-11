@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="" rel="stylesheet" />
+    <title>API Test</title>
+  </head>
+  <body>
+    <h1>
+      <ul></ul>
+    </h1>
+    <script>
+      fetch("https://restcountries.com/v3.1/all")
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          data.forEach((user) => {
+            const markup = `<li>${user.name.common}<br>-${user.capital}</li>`;
+            document
+              .querySelector("ul")
+              .insertAdjacentHTML("beforeend", markup);
+          });
+        });
+
+      fetch("https://restcountries.com/v3.1/all")
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data);
+        });
+    </script>
+  </body>
+</html>
