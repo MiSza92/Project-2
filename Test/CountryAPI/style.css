@@ -13,3 +13,6 @@ tr:nth-child(even) {
 td {
   border: black solid;
 }
+#population{
+  text-align: end;
+}

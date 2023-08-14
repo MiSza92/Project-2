@@ -4,13 +4,13 @@ fetch("https://restcountries.com/v3.1/all")
   })
   .then((data) => {
     data.forEach((country) => {
-      const line = `<tr><td>${country.name.common}</td><td>${country.region}</td><td>${country.population}</td></tr>`;
+      const line = `<tr><td>${country.name.common}</td><td>${country.region}</td><td id="population">${country.population}</td></tr>`;
       document.querySelector("tbody").insertAdjacentHTML("beforeend", line);
     });
   });
 link = "https://restcountries.com/v3.1/all";
 let popArray = fetchPopuData(link);
-//console.log(popArray);
+
 function fetchPopuData(link) {
   let res = [];
   fetch(link)
