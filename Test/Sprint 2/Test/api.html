@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
     <title>API Test</title>
   </head>
   <body>
@@ -11,18 +11,112 @@
       <ul></ul>
     </h1>
     <script>
-      fetch("https://restcountries.com/v3.1/all")
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => {
-          data.forEach((user) => {
-            const markup = `<li>${user.name.common}<br>-${user.capital}</li>`;
-            document
-              .querySelector("ul")
-              .insertAdjacentHTML("beforeend", markup);
+      const url = "https://restcountries.com/v3.1/all";
+      function getDataAndCreateArray(link) {
+        const worldArray = [];
+        fetch(link)
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            for (i = 0; i < data.length; i++) {
+              console.log(data[i]);
+              const country = {
+                flag: data[i].flags.png,
+                name: data[i].name.common,
+                capital: [],
+                languages: [],
+                population: data[i].population,
+                continents: [],
+                maps: data[i].maps.openStreetMaps,
+                currencies: [],
+              };
+
+              if (data[i].capital != undefined) {
+                for (j = 0; j < data[i].capital.length; j++) {
+                  country.capital.push(data[i].capital[j]);
+                }
+              } else {
+                country.capital.push("N.A.");
+              }
+              for (j = 0; j < data[i].continents.length; j++) {
+                country.continents.push(data[i].continents[j]);
+              }
+
+              //  Object.entries(([k, v])=>{console.log(k, v)})
+              // if (data[i].languages != undefined) {
+              //   for (const [key, value] of Object.entries(data[i].languages)) {
+              //     console.log(`${key}: ${value}`);
+              //   }
+              // }
+
+              // if (data[i].languages != undefined) {
+              //   for (value of Object.values(data[i].languages)) {
+              //     console.log(`'langs' ${value}`);
+              //   }
+              // }
+              if (data[i].currencies != undefined) {
+                for (j = 0; j < data[i].currencies.length; j++) {
+                  console.log(data[i].currencies[j]);
+                }
+              }
+
+              if (data[i].languages != undefined) {
+                for (j = 0; j < Object.values(data[i].languages).length; j++) {
+                  country.languages.push(Object.values(data[i].languages)[j]);
+                }
+              }
+              if (data[i].currencies != undefined) {
+                // for (j = 0; j < Object.values(data[i].languages).length; j++) {
+                //   country.languages.push(Object.values(data[i].languages)[j]);
+                // }
+              }
+
+              // if (data[i].currencies != undefined) {
+              //   for (j = 0; j < Object.values(data[i].currencies).length; j++) {
+              //     country.currencies.push(Object.values(data[i].currencies.name)[j]);
+              //     console.log(Object.values(data[i].currencies)[j]);
+              //   }
+              // } else {
+              //   country.currencies.push("N.A.");
+              // }
+
+              // if (data[i].currencies != undefined) {
+              //   for (j = 0; j < data[i].currencies.length; j++) {
+              //     country.currencies.push(data[i].currencies[j].toString());
+              //   }}
+
+              console.log(
+                [i] +
+                  " | " +
+                  country.flag +
+                  " | " +
+                  country.name +
+                  " | " +
+                  country.capital +
+                  " | " +
+                  country.continents +
+                  " | " +
+                  country.languages +
+                  " | " +
+                  country.maps +
+                  " | " +
+                  country.currencies
+              );
+              worldArray.push(country);
+            }
           });
-        });
+        return worldArray;
+      }
+      let worldArr = getDataAndCreateArray(url);
+
+      // let fetchPromise = getDataAndCreateArray(url).then((results) => {
+      //   console.log(results);
+      //   return results;
+      // });
+
+      // const entry = `<li>${data[i].name.common}<br>-${data[i].capital}<br>-${data[i].population}</li>`;
+      // document.querySelector("ul").insertAdjacentHTML("beforeend", entry);
     </script>
   </body>
 </html>
