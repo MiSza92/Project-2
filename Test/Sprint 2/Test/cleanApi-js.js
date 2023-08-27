@@ -8,10 +8,14 @@ function controller(url) {
 
 function getDataAndCreateArray(link) {
   const worldArray = [];
+  const currenciesArray = [];
+  const continentsArray = [];
   let posi = document.querySelector("body");
   const tab = document.createElement("table");
-  const selField = document.createElement("select");
-  posi.appendChild(selField);
+  const selFieldCurrencies = document.createElement("select");
+  const selFieldContinent = document.createElement("select");
+  posi.appendChild(selFieldCurrencies);
+  posi.appendChild(selFieldContinent);
   fetch(link)
     .then((res) => {
       return res.json();
@@ -61,50 +65,72 @@ function getDataAndCreateArray(link) {
             );
           }
         }
+        currenciesArray.push(country.currenciesShort);
+        continentsArray.push(country.continents);
         worldArray.push(country);
 
-        let row = document.createElement("tr");
-        let rowTD1 = document.createElement("td");
-        rowTD1.innerHTML = `<img src="${country.flag}"></img>`;
-        let rowTD2 = document.createElement("td");
-        rowTD2.innerText = country.name;
-        rowTD2.id = "name";
-        let rowTD3 = document.createElement("td");
-        rowTD3.innerText = country.capital;
-        rowTD3.id = "capital";
-        let rowTD4 = document.createElement("td");
-        rowTD4.innerText = country.languages;
-        rowTD4.id = "languages";
-        let rowTD5 = document.createElement("td");
-        rowTD5.innerText = country.population;
-        rowTD5.id = "population";
-        let rowTD6 = document.createElement("td");
-        rowTD6.innerHTML = `<a href="${country.maps}"><button>Show Map</button></a>`;
-        //  rowTD6.innerText = country.maps;
-        rowTD6.id = "maps";
-        let rowTD7 = document.createElement("td");
-        let rowTD71 = document.createElement("ul");
-        for (j = 0; j < country.currenciesLong.length; j++) {
-          rowTD71.innerHTML += `<li>${country.currenciesShort[j]}||${country.currenciesLong[j]}</li>`;
-          //! Hat duplikate
-          let option = document.createElement("option");
-          option.innerText = country.currenciesShort[j];
-          selField.appendChild(option);
-        }
-        tab.appendChild(row);
-        row.appendChild(rowTD1);
-        row.appendChild(rowTD2);
-        row.appendChild(rowTD3);
-        row.appendChild(rowTD4);
-        row.appendChild(rowTD5);
-        row.appendChild(rowTD6);
-
-        rowTD7.appendChild(rowTD71);
-        row.appendChild(rowTD7);
-        posi.appendChild(tab);
+        //   erstelleTable(country, posi, tab);
       }
+      erstelleDropDownCurrencies(currenciesArray, selFieldCurrencies);
+      erstelleDropDownContinent(continentsArray, selFieldContinent);
+      erstelleTableMitWorldArray(worldArray, posi, tab);
+      console.log(worldArray[0]);
     });
-  console.log(worldArray);
-  console.log(worldArray.currenciesShort);
-  return worldArray;
+}
+function erstelleTableMitWorldArray(worldArray, posi, tab) {
+  for (i = 0; i < worldArray.length; i++) {
+    let row = document.createElement("tr");
+    let rowTD1 = document.createElement("td");
+    rowTD1.innerHTML = `<img src="${worldArray[i].flag}"></img>`;
+    let rowTD2 = document.createElement("td");
+    rowTD2.innerText = worldArray[i].name;
+    rowTD2.id = "name";
+    let rowTD3 = document.createElement("td");
+    rowTD3.innerText = worldArray[i].capital;
+    rowTD3.id = "capital";
+    let rowTD4 = document.createElement("td");
+    rowTD4.innerText = worldArray[i].languages;
+    rowTD4.id = "languages";
+    let rowTD5 = document.createElement("td");
+    rowTD5.innerText = worldArray[i].population;
+    rowTD5.id = "population";
+    let rowTD6 = document.createElement("td");
+    rowTD6.innerHTML = `<a href="${worldArray[i].maps}"><button>Show Map</button></a>`;
+    rowTD6.id = "maps";
+    let rowTD7 = document.createElement("td");
+    let rowTD71 = document.createElement("ul");
+    for (j = 0; j < worldArray[i].currenciesLong.length; j++) {
+      rowTD71.innerHTML += `<li>${worldArray[i].currenciesShort[j]}||${worldArray[i].currenciesLong[j]}</li>`;
+    }
+    tab.appendChild(row);
+    row.appendChild(rowTD1);
+    row.appendChild(rowTD2);
+    row.appendChild(rowTD3);
+    row.appendChild(rowTD4);
+    row.appendChild(rowTD5);
+    row.appendChild(rowTD6);
+
+    rowTD7.appendChild(rowTD71);
+    row.appendChild(rowTD7);
+  }
+  posi.appendChild(tab);
+}
+
+function erstelleDropDownCurrencies(currenciesArray, selFieldCurrencies) {
+  currenciesArray = currenciesArray.toString();
+  currenciesArray = Array.from(new Set(currenciesArray.split(",")));
+  for (i = 0; i < currenciesArray.length; i++) {
+    let option = document.createElement("option");
+    option.innerText = currenciesArray[i];
+    selFieldCurrencies.appendChild(option);
+  }
+}
+function erstelleDropDownContinent(continentsArray, selFieldContinent) {
+  continentsArray = continentsArray.toString();
+  continentsArray = Array.from(new Set(continentsArray.split(",")));
+  for (i = 0; i < continentsArray.length; i++) {
+    let option = document.createElement("option");
+    option.innerText = continentsArray[i];
+    selFieldContinent.appendChild(option);
+  }
 }
