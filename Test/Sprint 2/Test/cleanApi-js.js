@@ -72,9 +72,11 @@ function getDataAndCreateArray(link) {
       createDropDown(currenciesArray, selFieldCurrencies);
       createDropDown(continentsArray, selFieldContinent);
       erstelleTableMitWorldArray(worldArray, posi, tab);
-      console.log(worldArray[0]);
+      console.log(worldArray);
+      return worldArray;
     });
 }
+function createFilteredTable(worldArray, posi, tab, filter1, filter2) {}
 function erstelleTableMitWorldArray(worldArray, posi, tab) {
   for (i = 0; i < worldArray.length; i++) {
     let row = document.createElement("tr");
