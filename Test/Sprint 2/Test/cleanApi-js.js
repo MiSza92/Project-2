@@ -68,11 +68,9 @@ function getDataAndCreateArray(link) {
         currenciesArray.push(country.currenciesShort);
         continentsArray.push(country.continents);
         worldArray.push(country);
-
-        //   erstelleTable(country, posi, tab);
       }
-      erstelleDropDownCurrencies(currenciesArray, selFieldCurrencies);
-      erstelleDropDownContinent(continentsArray, selFieldContinent);
+      createDropDown(currenciesArray, selFieldCurrencies);
+      createDropDown(continentsArray, selFieldContinent);
       erstelleTableMitWorldArray(worldArray, posi, tab);
       console.log(worldArray[0]);
     });
@@ -109,28 +107,18 @@ function erstelleTableMitWorldArray(worldArray, posi, tab) {
     row.appendChild(rowTD4);
     row.appendChild(rowTD5);
     row.appendChild(rowTD6);
-
     rowTD7.appendChild(rowTD71);
     row.appendChild(rowTD7);
   }
   posi.appendChild(tab);
 }
 
-function erstelleDropDownCurrencies(currenciesArray, selFieldCurrencies) {
-  currenciesArray = currenciesArray.toString();
-  currenciesArray = Array.from(new Set(currenciesArray.split(",")));
-  for (i = 0; i < currenciesArray.length; i++) {
+function createDropDown(entryArray, selField) {
+  workArray = entryArray.toString();
+  workArray = Array.from(new Set(workArray.split(",")));
+  for (i = 0; i < workArray.length; i++) {
     let option = document.createElement("option");
-    option.innerText = currenciesArray[i];
-    selFieldCurrencies.appendChild(option);
-  }
-}
-function erstelleDropDownContinent(continentsArray, selFieldContinent) {
-  continentsArray = continentsArray.toString();
-  continentsArray = Array.from(new Set(continentsArray.split(",")));
-  for (i = 0; i < continentsArray.length; i++) {
-    let option = document.createElement("option");
-    option.innerText = continentsArray[i];
-    selFieldContinent.appendChild(option);
+    option.innerText = workArray[i];
+    selField.appendChild(option);
   }
 }
