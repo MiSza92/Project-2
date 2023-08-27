@@ -118,6 +118,9 @@ function erstelleTableMitWorldArray(worldArray, posi, tab) {
 function createDropDown(entryArray, selField) {
   workArray = entryArray.toString();
   workArray = Array.from(new Set(workArray.split(",")));
+  let option = document.createElement("option");
+  option.innerText = "All";
+  selField.appendChild(option);
   for (i = 0; i < workArray.length; i++) {
     let option = document.createElement("option");
     option.innerText = workArray[i];
