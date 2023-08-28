@@ -3,7 +3,7 @@ const url = "https://restcountries.com/v3.1/all";
 controller(url);
 
 function controller(url) {
-  const worldArr = getDataAndCreateArray(url);
+  getDataAndCreateArray(url);
 }
 
 function getDataAndCreateArray(link) {
@@ -13,9 +13,13 @@ function getDataAndCreateArray(link) {
   let posi = document.querySelector("body");
   const tab = document.createElement("table");
   const selFieldCurrencies = document.createElement("select");
+  selFieldCurrencies.id = "currencyDropDown";
   const selFieldContinent = document.createElement("select");
+  selFieldContinent.id = "continentDropDown";
+
   posi.appendChild(selFieldCurrencies);
   posi.appendChild(selFieldContinent);
+  posi.appendChild(tab);
   fetch(link)
     .then((res) => {
       return res.json();
@@ -71,13 +75,15 @@ function getDataAndCreateArray(link) {
       }
       createDropDown(currenciesArray, selFieldCurrencies);
       createDropDown(continentsArray, selFieldContinent);
-      erstelleTableMitWorldArray(worldArray, posi, tab);
-      console.log(worldArray);
-      return worldArray;
+
+      erstelleTable(worldArray);
+      setEventListener(worldArray);
     });
 }
-function createFilteredTable(worldArray, posi, tab, filter1, filter2) {}
-function erstelleTableMitWorldArray(worldArray, posi, tab) {
+
+function erstelleTable(worldArray) {
+  const tab = document.querySelector("table");
+  tab.innerHTML = "";
   for (i = 0; i < worldArray.length; i++) {
     let row = document.createElement("tr");
     let rowTD1 = document.createElement("td");
@@ -112,7 +118,6 @@ function erstelleTableMitWorldArray(worldArray, posi, tab) {
     rowTD7.appendChild(rowTD71);
     row.appendChild(rowTD7);
   }
-  posi.appendChild(tab);
 }
 
 function createDropDown(entryArray, selField) {
@@ -127,3 +132,49 @@ function createDropDown(entryArray, selField) {
     selField.appendChild(option);
   }
 }
+const setEventListener = (worldArray) => {
+  const continentDropDown = document.querySelector("#continentDropDown");
+  continentDropDown.addEventListener("change", () => {
+    filterByBoth(worldArray, currencyDropDown, continentDropDown);
+  });
+
+  const currencyDropDown = document.querySelector("#currencyDropDown");
+  currencyDropDown.addEventListener("change", () => {
+    filterByBoth(worldArray, currencyDropDown, continentDropDown);
+  });
+};
+const filterByBoth = (worldArray, currency, continent) => {
+  const selectorCurrency = "#" + currency.id;
+  const selectorContinent = "#" + continent.id;
+  const valueCurrency = document.querySelector(selectorCurrency).value;
+  const valueContinent = document.querySelector(selectorContinent).value;
+  const filteredArray = [];
+  for (i = 0; i < worldArray.length; i++) {
+    for (j = 0; j < worldArray[i].currenciesShort.length; j++) {
+      if (valueCurrency != "All") {
+        if (valueCurrency == worldArray[i].currenciesShort[j]) {
+          filteredArray.push(worldArray[i]);
+        }
+      } else {
+        filteredArray.push(worldArray[i]);
+      }
+    }
+  }
+
+  const finalArray = [];
+  if (valueContinent != "All") {
+    for (x = 0; x < filteredArray.length; x++) {
+      console.log(filteredArray.continents);
+      for (y = 0; y < filteredArray[x].continents.length; y++) {
+        if (valueContinent == filteredArray[x].continents[y]) {
+          finalArray.push(filteredArray[x]);
+        }
+      }
+    }
+    const uniqueArray = [...new Set(finalArray)];
+    erstelleTable(uniqueArray);
+  } else {
+    const uniqueArray = [...new Set(filteredArray)];
+    erstelleTable(uniqueArray);
+  }
+};
