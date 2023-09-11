@@ -1,0 +1,25 @@
+.großerContainer {
+  display: flex;
+  justify-content: center;
+}
+.kleinerContainer {
+  width: 90%;
+}
+.flag {
+  width: 10%;
+  height: 5%;
+}
+img {
+  width: 100%;
+}
+#btn {
+  border-radius: 10px;
+}
+ul li {
+  list-style: none;
+}
+ul {
+  padding-right: 0;
+  padding: 0 !important;
+  margin: 0 !important;
+}
